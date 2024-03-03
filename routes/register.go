@@ -104,7 +104,6 @@ func (controller Controller) RegisterPost(c *gin.Context) {
 		return
 	}
 
-	// Generate activation token and send activation email
 	go controller.activationEmailHandler(user.ID, email, pd.Trans)
 
 	pd.Messages = append(pd.Messages, Message{
@@ -141,7 +140,7 @@ func (controller Controller) activationEmailHandler(userID uint, email string, t
 }
 
 func (controller Controller) sendActivationEmail(token string, email string, trans func(string) string) {
-	u, err := url.Parse(controller.config.BaseURL)
+	u, err := url.Parse("http://localhost:8080/")
 	if err != nil {
 		log.Println(err)
 		return

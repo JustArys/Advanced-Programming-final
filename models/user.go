@@ -6,7 +6,6 @@ import (
 	"time"
 )
 
-// User holds information relating to users that use the application
 type User struct {
 	gorm.Model
 	Email       string

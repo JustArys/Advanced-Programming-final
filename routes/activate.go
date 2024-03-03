@@ -8,7 +8,6 @@ import (
 	"time"
 )
 
-// Activate handles requests used to activate a users account
 func (controller Controller) Activate(c *gin.Context) {
 	pd := controller.DefaultPageData(c)
 	activationError := pd.Trans("Please provide a valid activation token")
@@ -68,7 +67,6 @@ func (controller Controller) Activate(c *gin.Context) {
 		return
 	}
 
-	// We don't need to check for an error here, even if it's not deleted it will not really affect application logic
 	controller.db.Delete(&activationToken)
 
 	pd.Messages = append(pd.Messages, Message{

@@ -1,7 +1,6 @@
 // Package config defines the env configuration variables
 package config
 
-// Config defines all the configuration variables for the golang-base-project
 type Config struct {
 	Port              string
 	CookieSecret      string

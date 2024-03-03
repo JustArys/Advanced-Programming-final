@@ -4,9 +4,7 @@ import (
 	"fmt"
 	"github.com/uberswe/golang-base-project/config"
 	"github.com/uberswe/golang-base-project/models"
-	"gorm.io/driver/mysql"
 	"gorm.io/driver/postgres"
-	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"time"
 )
@@ -28,22 +26,9 @@ func connectLoop(c config.Config, count int) (db *gorm.DB, err error) {
 }
 
 func attemptConnection(c config.Config) (db *gorm.DB, err error) {
-	if c.Database == "sqlite" {
-		// In-memory sqlite if no database name is specified
-		dsn := "file::memory:?cache=shared"
-		if c.DatabaseName != "" {
-			dsn = fmt.Sprintf("%s.db", c.DatabaseName)
-		}
-		db, err = gorm.Open(sqlite.Open(dsn), &gorm.Config{})
-	} else if c.Database == "mysql" {
-		dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", c.DatabaseUsername, c.DatabasePassword, c.DatabaseHost, c.DatabasePort, c.DatabaseName)
-		db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
-	} else if c.Database == "postgres" {
-		dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=UTC", c.DatabaseHost, c.DatabaseUsername, c.DatabasePassword, c.DatabaseName, c.DatabasePort)
-		db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
-	} else {
-		return db, fmt.Errorf("no database specified: %s", c.Database)
-	}
+	dsn := fmt.Sprintf("host=localhost user=postgres password=Just_arys7 dbname=postgres port=5432 sslmode=disable TimeZone=Asia/Shanghai")
+	db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
+
 	return db, err
 }
 
